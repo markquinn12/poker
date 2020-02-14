@@ -21,7 +21,7 @@ The characteristics of the string of cards are:
   - The second character represents the suit: `S(pades), H(earts), D(iamonds), C(lubs)`
 - A space is used as a separator between cards
 
-In this poker game, Aces are always the highest card in the deck, so therefore `"AS KH QC JD TD"` _is_ a straight, but 
+In this poker game, Aces are always the highest card in the deck (14), so `"AS KH QC JD TD"` _is_ a straight, but 
 `"AS 2H 3C 4D 5D"` _is not_.
 
 ### Tests
