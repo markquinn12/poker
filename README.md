@@ -39,12 +39,14 @@ The game can be implemented using any combination of the following languages:
 - Kotlin
 - Groovy 
 
-You are free to use any 3rd party libraries/frameworks. If you choose Kotlin or Groovy, you'll need to modify the 
-build file to support compilation of these files. It is recommended you use at least JDK version 8.
+You are welcome to add any 3rd party libraries/frameworks. If you choose Kotlin or Groovy, you'll need to modify the 
+build file to support compilation of these languages. It is recommended you use at least JDK version 8.
 
 If you choose JavaScript, you'll need to re-implement the skeleton code and tests in this repository. You will 
 also need to include clear instructions for how to build/run the tests e.g. 
 > execute `npm install` followed by `npm run test` in the project root
+
+The goal is to pass the test suite. If there isn't a test for a particular case, e.g. an invalid string being passed to the `PokerHand` constructor, you may ignore it.
 
 ### GitHub
 - Clone or download this repo (do not fork it)
