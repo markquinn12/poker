@@ -57,3 +57,5 @@ The goal is to pass the test suite. If there isn't a test for a particular case,
 While we would ideally like to receive a complete solution i.e. a solution which passes all of the included test cases, 
 we're more interested in the quality of the solution than completeness. In other words, a high quality solution that 
 omits a few edge cases will receive more credit than a complete, but low-quality solution.
+
+One measure of the quality of a solution is it's flexibility, e.g. if the rules were changed such that two pairs beats three-of-a-kind, how easy is it to make this change?
