@@ -87,6 +87,11 @@ public class PokerHandTests {
         compareHands(TIE, "2S AH 4H 5S 6C", "AD 4C 5H 6H 2C");
     }
 
+    @Test
+    public void two_full_houses_highest_three_of_a_kind_wins() {
+        compareHands(WIN, "KS KH KD 2S 2C", "JS JH JD AS AC");
+    }
+    
     private void compareHands(HandResult expectedResult, String playerHand, String opponentHand) {
         PokerHand player = new PokerHand(playerHand);
         PokerHand opponent = new PokerHand(opponentHand);
