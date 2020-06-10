@@ -1,11 +1,20 @@
 package com.clarusone.poker;
 
-import static com.clarusone.poker.HandResult.*;
-import static org.junit.Assert.assertEquals;
-
+import com.clarusone.poker.enums.HandResult;
 import org.junit.Test;
 
+import static com.clarusone.poker.enums.HandResult.*;
+import static org.junit.Assert.*;
+
 public class PokerHandTests {
+
+    @Test
+    public void testCtor() {
+        PokerHand pokerHand = new PokerHand("2H 3H 4H 5H 6H");
+        assertTrue(pokerHand.equals(pokerHand));
+        assertTrue(pokerHand.equals(new PokerHand("2H 3H 4H 5H 6H")));
+        assertNotNull(pokerHand.hashCode());
+    }
 
     @Test
     public void highest_straight_flush_wins() {
@@ -68,6 +77,16 @@ public class PokerHandTests {
     }
 
     @Test
+    public void highest_pair_wins_highestRemainingCards_loses() {
+        compareHands(LOSS, "2S 2D AH KS QS", "9H 9C 4H 2H 3S");
+    }
+
+    @Test
+    public void tie_pair_sameHands() {
+        compareHands(TIE, "6S KD 7H 5S KS", "6S KD KS 7H 5S");
+    }
+
+    @Test
     public void pair_beats_a_high_card() {
         compareHands(LOSS, "2S AH 4H 5S KC", "AH AC 5H 6H 7S");
     }
@@ -91,12 +110,17 @@ public class PokerHandTests {
     public void two_full_houses_highest_three_of_a_kind_wins() {
         compareHands(WIN, "KS KH KD 2S 2C", "JS JH JD AS AC");
     }
+
+    @Test
+    public void royalFlush_beats_straightFlush_wins() {
+        compareHands(WIN, "AH QH KH TH JH", "KS QS TS JS 9S");
+    }
     
     private void compareHands(HandResult expectedResult, String playerHand, String opponentHand) {
         PokerHand player = new PokerHand(playerHand);
         PokerHand opponent = new PokerHand(opponentHand);
         int actualResult = player.compareTo(opponent);
-        assertEquals(expectedResult.comparatorValue, actualResult);
+        assertEquals(expectedResult.getComparatorValue(), actualResult);
     }
 }
 

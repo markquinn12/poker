@@ -1,13 +1,17 @@
-package com.clarusone.poker;
+package com.clarusone.poker.enums;
 
 public enum HandResult {
     TIE(0),
     WIN(1),
     LOSS(-1);
 
-    public final int comparatorValue;
+    private final int comparatorValue;
 
     HandResult(int comparatorValue) {
         this.comparatorValue = comparatorValue;
+    }
+
+    public int getComparatorValue() {
+        return comparatorValue;
     }
 }

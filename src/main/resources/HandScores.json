@@ -1,0 +1,44 @@
+{
+  "handScores": [
+    {
+      "score" : 1000000,
+      "hand" : "HIGH_CARD"
+    },
+    {
+      "score" : 20000000,
+      "hand" : "PAIR"
+    },
+    {
+      "score" : 300000000,
+      "hand" : "TWO_PAIR"
+    },
+    {
+      "score" : 4000000000,
+      "hand" : "THREE_OF_A_KIND"
+    },
+    {
+      "score" : 50000000000,
+      "hand" : "STRAIGHT"
+    },
+    {
+      "score" : 600000000000,
+      "hand" : "FLUSH"
+    },
+    {
+      "score" : 7000000000000,
+      "hand" : "FULL_HOUSE"
+    },
+    {
+      "score" : 80000000000000,
+      "hand" : "FOUR_OF_A_KIND"
+    },
+    {
+      "score" : 900000000000000,
+      "hand" : "STRAIGHT_FLUSH"
+    },
+    {
+      "score" : 1000000000000000,
+      "hand" : "ROYAL_FLUSH"
+    }
+  ]
+}
