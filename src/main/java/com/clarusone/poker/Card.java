@@ -25,6 +25,9 @@ public class Card implements Comparable<Card> {
         return value;
     }
 
+    /**
+     * If comparing to itself then return -1
+     */
     @Override
     public int compareTo(Card toCompare) {
         int comparison = 0;
@@ -61,10 +64,12 @@ public class Card implements Comparable<Card> {
         return Objects.hashCode(suit, value);
     }
 
+    /**
+     * Card builder to allow string to be built as Card easily
+     */
     public static class Builder {
 
         public Card build(String card) {
-
             List<String> split = Splitter
                     .fixedLength(1)
                     .splitToList(card);

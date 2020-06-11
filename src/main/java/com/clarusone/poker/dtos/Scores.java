@@ -2,6 +2,9 @@ package com.clarusone.poker.dtos;
 
 import java.util.List;
 
+/**
+ * Deserialized from json file
+ */
 public class Scores {
     private List<HandScore> handScores;
 

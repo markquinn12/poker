@@ -18,6 +18,9 @@ public class Constants {
     public static final String STRAIGHT_FLUSH = "STRAIGHT_FLUSH";
     public static final String ROYAL_FLUSH = "ROYAL_FLUSH";
 
+    public static final int NUMBER_OF_MATCHES_TWO_PAIR = 4;
+    public static final int NUMBER_OF_MATCHES_FULL_HOUSE = 8;
+
     public static final LinkedHashMap<String, Integer> cardValues = new LinkedHashMap<String, Integer>() {{
         put("2", 2);
         put("3", 3);

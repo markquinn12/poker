@@ -15,15 +15,8 @@ public class ComparisonResult {
     public HandResult getResult(){
 
         HandResult result = HandResult.TIE;
-
-        if (handValue > opponentHandValue) {
-            result = HandResult.WIN;
-        }
-
-        if (handValue < opponentHandValue) {
-            result = HandResult.LOSS;
-        }
-
+        if (handValue > opponentHandValue) result = HandResult.WIN;
+        if (handValue < opponentHandValue) result = HandResult.LOSS;
         return result;
     }
 
