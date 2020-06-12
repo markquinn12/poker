@@ -91,6 +91,7 @@ public class ScoreEvaluator {
     }
 
     /**
+     * Assumes cards sorted descending
      * Get the middle card value of full house and check if this is equal to first card value
      * If it is then then 3 of a kind value is higher than pair value
      * Score is then calculated based on above logic
