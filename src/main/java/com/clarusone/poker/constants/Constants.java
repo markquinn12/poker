@@ -1,6 +1,7 @@
 package com.clarusone.poker.constants;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Constants {
 
@@ -21,7 +22,8 @@ public class Constants {
     public static final int NUMBER_OF_MATCHES_TWO_PAIR = 4;
     public static final int NUMBER_OF_MATCHES_FULL_HOUSE = 8;
 
-    public static final LinkedHashMap<String, Integer> cardValues = new LinkedHashMap<String, Integer>() {{
+    //Order of map can be changed based on rules being used
+    public static final Map<String, Integer> cardValues = new LinkedHashMap<String, Integer>() {{
         put("2", 2);
         put("3", 3);
         put("4", 4);
@@ -37,7 +39,11 @@ public class Constants {
         put("A", 14);
     }};
 
-    public static Integer getLastCardValue(){
+    public static Integer getLastCardValue() {
         return cardValues.values().stream().skip(Constants.cardValues.size() - 1).findFirst().get();
+    }
+
+    public static Integer getHigherCardValue() {
+        return getLastCardValue() + 1;
     }
 }

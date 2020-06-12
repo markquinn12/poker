@@ -12,7 +12,7 @@ public class ComparisonResult {
         this.opponentHandValue = opponentHandValue;
     }
 
-    public HandResult getResult(){
+    public HandResult getResult() {
 
         HandResult result = HandResult.TIE;
         if (handValue > opponentHandValue) result = HandResult.WIN;

@@ -72,12 +72,22 @@ public class PokerHandTests {
     }
 
     @Test
+    public void single_pair_two_pairs_beats_a_() {
+        compareHands(WIN, "2S 2H 4H 5S 4C", "AH AC 5H 6H 7S");
+    }
+
+    @Test
     public void highest_pair_wins() {
         compareHands(LOSS, "6S AD 7H 4S AS", "AH AC 5H 6H 7S");
     }
 
     @Test
-    public void highest_pair_wins_highestRemainingCards_loses() {
+    public void pair_with_highest_kicker_wins_threeCardGame() {
+        compareHands(LOSS, "6S AD AS", "AH AC 7S");
+    }
+
+    @Test
+    public void highest_pair_wins_highest_remaining_cards_loses() {
         compareHands(LOSS, "2S 2D AH KS QS", "9H 9C 4H 2H 3S");
     }
 
@@ -89,6 +99,11 @@ public class PokerHandTests {
     @Test
     public void pair_beats_a_high_card() {
         compareHands(LOSS, "2S AH 4H 5S KC", "AH AC 5H 6H 7S");
+    }
+
+    @Test
+    public void pair_beats_a_high_card_three_card_game() {
+        compareHands(LOSS, "9S AH KC", "AH AC 5H");
     }
 
     @Test

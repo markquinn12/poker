@@ -11,7 +11,7 @@ public class ScoreEvaluatorService {
     private ScoreEvaluatorService() {
     }
 
-    public static ComparisonResult compareHands(PokerHand hand, PokerHand opponentHand){
+    public static ComparisonResult compareHands(PokerHand hand, PokerHand opponentHand) {
 
         //Read scores from file. This allows us to change the base score per hand
         Scores scores = JsonFileReader.getScores();

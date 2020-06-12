@@ -10,8 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.clarusone.poker.constants.Constants.NUMBER_OF_MATCHES_FULL_HOUSE;
-import static com.clarusone.poker.constants.Constants.NUMBER_OF_MATCHES_TWO_PAIR;
+import static com.clarusone.poker.constants.Constants.*;
 
 public class ScoreEvaluator {
 
@@ -21,6 +20,7 @@ public class ScoreEvaluator {
     /**
      * Evaluate each hand and add to list, then return max value in the list
      * More processing needed but this allows us to change rules/base score of hands in json file.
+     * Number of cards can be increased/decreased to suit rules
      */
     public static long evalHand(List<Card> cards, Scores scores) {
 
@@ -42,18 +42,26 @@ public class ScoreEvaluator {
     }
 
     /**
-     * Evaluate score of equal card values based on numMatches
+     * Evaluate score of equal card values based on expectedMatches
      */
-    private static long evalOfAKind(List<Card> cards, long baseScore, int numMatches) {
+    private static long evalOfAKind(List<Card> cards, long baseScore, int expectedMatches) {
 
         long score = 0;
         List<Card> toEvaluate = new ArrayList<>(cards);
         List<Card> matches = findMatchesAndRemove(toEvaluate);
 
-        if (matches.size() == (numMatches * (numMatches - 1))) {
-            score = baseScore + (matches.get(0).getValue() * baseScore) + evalHighCardScore(toEvaluate, baseScore);
+        if (matches.size() == (expectedMatches * (expectedMatches - 1))) {
+            score = (matches.get(0).getValue() * (calculatePower(cards.size()))) + evalHighCardScore(toEvaluate, baseScore);
         }
         return score;
+    }
+
+    /**
+     * Calculate the power of (highest card value + 1)
+     */
+    private static int calculatePower(int power) {
+        Integer higherCardValue = getHigherCardValue();
+        return (int) Math.pow(higherCardValue, power);
     }
 
     private static long evalTwoPair(List<Card> cards, long baseScore) {
@@ -63,7 +71,7 @@ public class ScoreEvaluator {
         List<Card> matches = findMatchesAndRemove(toEvaluate);
 
         if (matches.size() == NUMBER_OF_MATCHES_TWO_PAIR) {
-            score = baseScore + (matches.get(0).getValue() * 2) + (matches.get(2).getValue() * 2) + evalHighCardScore(toEvaluate, baseScore);
+            score = (matches.get(0).getValue() * calculatePower(2)) + (matches.get(2).getValue() * calculatePower(1)) + evalHighCardScore(toEvaluate, baseScore);
         }
         return score;
 
@@ -76,10 +84,29 @@ public class ScoreEvaluator {
         List<Card> matches = findMatchesAndRemove(toEvaluate);
 
         if (matches.size() == NUMBER_OF_MATCHES_FULL_HOUSE) {
-            score = baseScore + (matches.get(0).getValue() * baseScore) + (matches.get(2).getValue() * baseScore) + evalHighCardScore(cards, baseScore);
+            score = calculateFullHouseScore(cards, baseScore);
         }
         return score;
 
+    }
+
+    /**
+     * Get the middle card value of full house and check if this is equal to first card value
+     * If it is then then 3 of a kind value is higher than pair value
+     * Score is then calculated based on above logic
+     */
+    private static long calculateFullHouseScore(List<Card> cards, long baseScore) {
+        long score = 0;
+        Card midCard = cards.get(2);
+        int midValue = midCard.getValue() * calculatePower(cards.size());
+        int firstCardValue = cards.get(0).getValue();
+
+        if (firstCardValue == midCard.getValue()) {
+            score += baseScore + midValue + cards.get(4).getValue();
+        } else {
+            score += baseScore + midValue + firstCardValue;
+        }
+        return score;
     }
 
     private static long evalStraight(List<Card> cards, long baseScore) {
@@ -88,7 +115,7 @@ public class ScoreEvaluator {
         boolean isStraight = isStraight(cards);
 
         if (isStraight) {
-            score = (baseScore * cards.size()) + evalHighCardScore(cards, baseScore);
+            score = evalHighCardScore(cards, baseScore);
         }
 
         return score;
@@ -111,7 +138,7 @@ public class ScoreEvaluator {
         }
 
         if (evaluation) {
-            score = (baseScore * cards.size()) + evalHighCardScore(cards, baseScore);
+            score = evalHighCardScore(cards, baseScore);
         }
 
         return score;
@@ -123,7 +150,7 @@ public class ScoreEvaluator {
         boolean isFlush = isFlush(cards);
 
         if (isFlush) {
-            score = (baseScore + evalHighCardScore(cards, baseScore));
+            score = evalHighCardScore(cards, baseScore);
         }
 
         return score;
@@ -192,18 +219,20 @@ public class ScoreEvaluator {
 
     /**
      * Evaluate the total score of all cards in list
-     * Card score is based on decreasing base number to allow for proper ranking
+     * Assumes cards are sorted descending
+     * Card score is calculated bottom up on (Highest card value + 1) to allow for tiered scoring
      */
     private static long evalHighCardScore(List<Card> cards, long base) {
 
         int score = 0;
+        int setValue = 1;
 
-        for (Card card : cards) {
-            base = base / 10;
-            score += card.getValue() + base;
+        for (int i = cards.size() - 1; i > -1; i--) {
+            setValue += setValue * getHigherCardValue();
+            score += cards.get(i).getValue() * setValue;
         }
 
-        return score;
+        return base + score;
 
     }
 
